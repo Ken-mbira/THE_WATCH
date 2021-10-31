@@ -2,7 +2,7 @@ from django.db.models import fields
 from rest_framework import serializers
 from rest_framework_recursive.fields import RecursiveField
 
-from neighbourhood.models import Profile,Neighbourhood,Location,Profile,Business,Services
+from neighbourhood.models import EventType, Occurrence, Profile,Neighbourhood,Location,Profile,Business,Services
 from account.models import Account
 from account.serializers import UserSerializer
 
@@ -49,3 +49,14 @@ class ServicesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Services
         fields = '__all__'
+
+class EventsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EventType
+        fields = '__all__'
+
+class OccurrenceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Occurrence
+        fields = '__all__'
+        read_only_fields = ['reporter','neighbourhood']

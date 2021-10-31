@@ -2,9 +2,11 @@ from django.shortcuts import render
 from rest_framework import generics
 
 from rest_framework.permissions import IsAuthenticated
+import neighbourhood
 
-from neighbourhood.models import Neighbourhood,Location,Profile,Business,Services
-from neighbourhood.serializers import NeighbourhoodSerializer,LocationSerializer, ProfileSerializer,BusinessSerializer, ServicesSerializer
+from neighbourhood.models import EventType, Neighbourhood,Location, Occurrence,Profile,Business,Services
+from neighbourhood.serializers import NeighbourhoodSerializer,LocationSerializer, ProfileSerializer,BusinessSerializer, ServicesSerializer, EventsSerializer, OccurrenceSerializer
+
 
 
 class NeighbourhoodList(generics.ListCreateAPIView):
@@ -51,3 +53,15 @@ class BusinessDetail(generics.RetrieveUpdateDestroyAPIView):
 class ServicesList(generics.ListCreateAPIView):
     queryset = Services.objects.all()
     serializer_class=ServicesSerializer
+
+class EventList(generics.ListCreateAPIView):
+    queryset = EventType.objects.all()
+    serializer_class = EventsSerializer
+
+class OccurrenceList(generics.ListCreateAPIView):
+    queryset = Occurrence.objects.all()
+    serializer_class = OccurrenceSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(reporter=self.request.user.profile, neighbourhood=self.request.user.profile.neighbourhood)

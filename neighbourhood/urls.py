@@ -10,5 +10,7 @@ urlpatterns = [
     path('profiles/<int:pk>',views.ProfileDetail.as_view(),name="profile"),
     path('business',views.BusinessList.as_view(),name="businesses"),
     path('business/<int:pk>',views.BusinessDetail.as_view(),name="business"),
-    path('services',views.ServicesList.as_view(),name="services")
+    path('services',views.ServicesList.as_view(),name="services"),
+    path('events/',views.EventList.as_view(),name="events"),
+    path('occurrence',views.OccurrenceList.as_view(),name="occurrences"),
 ]
