@@ -92,4 +92,53 @@ class Services(models.Model):
         verbose_name="Service type"
         verbose_name_plural="Service types"
 
+class Neighbourhood(models.Model):
+    """This define the behaviors of a neighborhood
 
+    Args:
+        models ([type]): [description]
+    """
+    name = models.CharField(
+        max_length=50,
+        blank = False,
+        null=False,
+        verbose_name="neighbourhood name",
+        help_text="format: required"
+    )
+
+    location = models.ForeignKey(
+        Location,
+        null=False,
+        blank = False,
+        related_name="neighbourhood",
+        on_delete=models.PROTECT
+    )
+
+    slogan = models.CharField(
+        max_length=50,
+        blank = False,
+        null=False,
+        verbose_name="slogan",
+        help_text="format: required, max_length=50"
+    )
+
+    police_hotline = models.CharField(
+        max_length=10,
+        blank = False,
+        null=False,
+        verbose_name="police hotline",
+        help_text="format: required"
+    )
+
+    hospital_hotline = models.CharField(
+        max_length=10,
+        blank = False,
+        null=False,
+        verbose_name="hospital hotline",
+        help_text="format: required"
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        editable=False,
+    )
