@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'account',
     'neighbourhood',
     'mptt',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
