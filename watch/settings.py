@@ -41,10 +41,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'account',
-    'neighbourhood',
     'mptt',
     'rest_framework',
     'rest_framework.authtoken',
+    'neighbourhood',
 ]
 
 MIDDLEWARE = [
@@ -77,6 +77,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'watch.wsgi.application'
 
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ]
+}
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
