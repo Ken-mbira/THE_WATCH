@@ -145,6 +145,11 @@ class Neighbourhood(models.Model):
         editable=False,
     )
 
+    image = models.ImageField(
+        upload_to="images/",
+        null=True,
+    )
+
     def __str__(self):
         return self.name
 
