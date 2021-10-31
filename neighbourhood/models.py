@@ -34,3 +34,32 @@ class Location(MPTTModel):
     def __str__(self):
         return self.name
 
+
+class EventType(models.Model):
+    """This define the type of occurrence in the neighborhood
+
+    Args:
+        models ([type]): [description]
+    """
+    name = models.CharField(
+        max_length=50,
+        blank = False,
+        null=False,
+        verbose_name="event name",
+        help_text="format: required"
+    )
+
+    description = models.TextField(
+        blank = False,
+        null=False,
+        verbose_name="event description",
+        help_text="format: required"
+    )
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name="Event type"
+        verbose_name_plural="Event types"
+
