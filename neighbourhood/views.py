@@ -12,6 +12,11 @@ class NeighbourhoodList(generics.ListCreateAPIView):
     serializer_class = NeighbourhoodSerializer
     permission_classes = [IsAuthenticated]
 
+class NeighbourhoodDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Neighbourhood.objects.all()
+    serializer_class = NeighbourhoodSerializer
+    permission_classes = [IsAuthenticated]
+
 class LocationsList(generics.ListAPIView):
     queryset = Location.objects.filter(parent__isnull=True)
     serializer_class = LocationSerializer
@@ -24,3 +29,8 @@ class ProfilesList(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(account=self.request.user)
+
+class ProfileDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+    permission_classes = [IsAuthenticated]
