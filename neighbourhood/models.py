@@ -63,3 +63,33 @@ class EventType(models.Model):
         verbose_name="Event type"
         verbose_name_plural="Event types"
 
+
+class Services(models.Model):
+    """This defines the types of services offered in a business
+
+    Args:
+        models ([type]): [description]
+    """
+    name = models.CharField(
+        max_length=50,
+        blank = False,
+        null=False,
+        verbose_name="service name",
+        help_text="format: required"
+    )
+
+    description = models.TextField(
+        blank = False,
+        null=False,
+        verbose_name="service description",
+        help_text="format: required"
+    )
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name="Service type"
+        verbose_name_plural="Service types"
+
+
