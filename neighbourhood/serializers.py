@@ -2,7 +2,7 @@ from django.db.models import fields
 from rest_framework import serializers
 from rest_framework_recursive.fields import RecursiveField
 
-from neighbourhood.models import Profile,Neighbourhood,Location,Profile
+from neighbourhood.models import Profile,Neighbourhood,Location,Profile,Business
 from account.models import Account
 from account.serializers import UserSerializer
 
@@ -37,3 +37,8 @@ class LocationSerializer(serializers.ModelSerializer):
         model = Location
         fields = ['id','name','children']
 
+
+class BusinessSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Business
+        exclude = ['owner']

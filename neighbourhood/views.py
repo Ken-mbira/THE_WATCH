@@ -3,8 +3,8 @@ from rest_framework import generics
 
 from rest_framework.permissions import IsAuthenticated
 
-from neighbourhood.models import Neighbourhood,Location,Profile
-from neighbourhood.serializers import NeighbourhoodSerializer,LocationSerializer, ProfileSerializer
+from neighbourhood.models import Neighbourhood,Location,Profile,Business
+from neighbourhood.serializers import NeighbourhoodSerializer,LocationSerializer, ProfileSerializer,BusinessSerializer
 
 
 class NeighbourhoodList(generics.ListCreateAPIView):
@@ -34,3 +34,11 @@ class ProfileDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
     permission_classes = [IsAuthenticated]
+
+class BusinessList(generics.ListCreateAPIView):
+    queryset = Business.objects.all()
+    serializer_class = BusinessSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user.profile)
