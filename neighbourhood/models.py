@@ -219,3 +219,64 @@ class Business(models.Model):
         null=False,
         upload_to='images/',
     )
+
+
+class Occurrence(models.Model):
+    """This defines an occurence to be reported by a user
+
+    Args:
+        models ([type]): [description]
+    """
+    type = models.ForeignKey(
+        EventType,
+        null=False,
+        blank=False,
+        related_name="occurred_events",
+        on_delete=models.PROTECT
+    )
+
+    name = models.CharField(
+        max_length=50,
+        blank = False,
+        null=False,
+        verbose_name="ocurrence name",
+        help_text="format: required"
+    )
+
+    description = models.TextField(
+        blank = False,
+        null=False,
+        verbose_name="occurence description",
+        help_text="format: required"
+    )
+
+    reporter = models.ForeignKey(
+        Profile,
+        related_name="reported_events",
+        on_delete=models.PROTECT,
+    )
+
+    image_description = models.ImageField(
+        blank=False,
+        null=False,
+        upload_to='images/',
+    )
+
+    neighbourhood = models.ForeignKey(
+        Neighbourhood,
+        null=False,
+        blank=False,
+        related_name="reported_events",
+        on_delete=models.CASCADE,
+    )
+
+    reported_at = models.DateTimeField(
+        auto_now_add=True,
+        editable=False
+    )
+
+    to_happen_at = models.DateTimeField(
+        null=True,
+        blank=True,
+        verbose_name="scheduled time"
+    )
