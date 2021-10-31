@@ -2,6 +2,8 @@ from django.db import models
 
 from mptt.models import MPTTModel,TreeForeignKey
 
+from account.models import Account
+
 # Create your models here.
 class Location(MPTTModel):
     """A collection of all locations
@@ -141,4 +143,32 @@ class Neighbourhood(models.Model):
     created_at = models.DateTimeField(
         auto_now_add=True,
         editable=False,
+    )
+
+
+class Profile(models.Model):
+    """This defines a user profile
+
+    Args:
+        models ([type]): [description]
+    """
+    account = models.OneToOneField(
+        Account,
+        related_name="profile",
+        blank=False,
+        null=False,
+        on_delete=models.CASCADE,
+    )
+
+    neighbourhood = models.ForeignKey(
+        Neighbourhood,
+        related_name="resident",
+        blank=False,
+        null=False,
+        on_delete=models.CASCADE,
+    )
+
+    is_admin = models.BooleanField(
+        default=False,
+        verbose_name="is user an admin in a model"
     )
