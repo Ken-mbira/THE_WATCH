@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'neighbourhood',
     'mptt',
     'rest_framework',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
