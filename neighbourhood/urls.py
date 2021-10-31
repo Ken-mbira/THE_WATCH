@@ -4,5 +4,6 @@ from neighbourhood import views
 
 urlpatterns = [
     path('',views.NeighbourhoodList.as_view(),name="neighbourhoods"),
-    path('locations/',views.LocationsList.as_view(),name="locations")
+    path('locations/',views.LocationsList.as_view(),name="locations"),
+    path('profiles',views.ProfilesList.as_view(),name="profiles")
 ]

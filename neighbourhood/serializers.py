@@ -1,8 +1,10 @@
+from django.db.models import fields
 from rest_framework import serializers
 from rest_framework_recursive.fields import RecursiveField
 
-from neighbourhood.models import Profile,Neighbourhood,Location
+from neighbourhood.models import Profile,Neighbourhood,Location,Profile
 from account.models import Account
+from account.serializers import UserSerializer
 
 class ProfileSerializer(serializers.ModelSerializer):
     """Defines the details to be included in serializing a profile
@@ -12,7 +14,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Profile
-        fields = '__all__'
+        exclude = ['account']
 
 class NeighbourhoodSerializer(serializers.ModelSerializer):
     """Defines the details to be included in serializing a profile
