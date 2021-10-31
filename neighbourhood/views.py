@@ -65,3 +65,8 @@ class OccurrenceList(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(reporter=self.request.user.profile, neighbourhood=self.request.user.profile.neighbourhood)
+
+class OccurrenceDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Occurrence.objects.all()
+    serializer_class = OccurrenceSerializer
+    permission_classes = [IsAuthenticated]
