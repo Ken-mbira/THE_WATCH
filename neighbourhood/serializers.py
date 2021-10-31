@@ -1,6 +1,7 @@
 from rest_framework import serializers
+from rest_framework_recursive.fields import RecursiveField
 
-from neighbourhood.models import Profile,Neighbourhood
+from neighbourhood.models import Profile,Neighbourhood,Location
 from account.models import Account
 
 class ProfileSerializer(serializers.ModelSerializer):
@@ -22,3 +23,15 @@ class NeighbourhoodSerializer(serializers.ModelSerializer):
     class Meta:
         model = Neighbourhood
         fields = '__all__'
+
+class LocationSerializer(serializers.ModelSerializer):
+    """This returns a list of locations
+
+    Args:
+        serializers ([type]): [description]
+    """
+    children = RecursiveField(many=True)
+    class Meta:
+        model = Location
+        fields = ['id','name','children']
+
