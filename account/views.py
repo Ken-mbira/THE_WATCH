@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
 
 from account.serializers import RegistrationsSerializer,UserSerializer
 from account.models import Account
@@ -23,4 +24,5 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     """
     queryset = Account.objects.all()
     serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
 
