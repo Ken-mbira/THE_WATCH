@@ -2,7 +2,7 @@ from django.db.models import fields
 from rest_framework import serializers
 from rest_framework_recursive.fields import RecursiveField
 
-from neighbourhood.models import Profile,Neighbourhood,Location,Profile,Business
+from neighbourhood.models import Profile,Neighbourhood,Location,Profile,Business,Services
 from account.models import Account
 from account.serializers import UserSerializer
 
@@ -14,7 +14,8 @@ class ProfileSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Profile
-        exclude = ['account']
+        fields ='__all__'
+        read_only_fields = ['account']
 
 class NeighbourhoodSerializer(serializers.ModelSerializer):
     """Defines the details to be included in serializing a profile
@@ -41,4 +42,10 @@ class LocationSerializer(serializers.ModelSerializer):
 class BusinessSerializer(serializers.ModelSerializer):
     class Meta:
         model = Business
-        exclude = ['owner']
+        fields = '__all__'
+        read_only_fields = ['owner']
+
+class ServicesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Services
+        fields = '__all__'
