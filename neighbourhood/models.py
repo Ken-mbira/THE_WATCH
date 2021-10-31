@@ -145,6 +145,9 @@ class Neighbourhood(models.Model):
         editable=False,
     )
 
+    def __str__(self):
+        return self.name
+
 
 class Profile(models.Model):
     """This defines a user profile
@@ -171,4 +174,48 @@ class Profile(models.Model):
     is_admin = models.BooleanField(
         default=False,
         verbose_name="is user an admin in a model"
+    )
+
+    def __str__(self):
+        return self.account.username
+
+
+class Business(models.Model):
+    """This defines a user business in a particular neighbourhood
+
+    Args:
+        models ([type]): [description]
+    """
+
+    owner = models.ForeignKey(
+        Profile,
+        related_name="business",
+        null=False,
+        blank=False,
+        verbose_name="owner of business",
+        on_delete=models.CASCADE,
+        help_text="owner of business"
+    )
+
+    name = models.CharField(
+        max_length=50,
+        blank = False,
+        null=False,
+        verbose_name="business name",
+        help_text="format: required"
+    )
+
+    services = models.ForeignKey(
+        Services,
+        related_name="business",
+        on_delete=models.CASCADE,
+        null=False,
+        blank=False,
+        verbose_name="services offered",
+    )
+
+    image = models.ImageField(
+        blank=False,
+        null=False,
+        upload_to='images/',
     )
