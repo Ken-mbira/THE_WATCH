@@ -285,8 +285,11 @@ class Occurrence(models.Model):
         editable=False
     )
 
-    to_happen_at = models.DateTimeField(
+    to_happen_at = models.DateField(
         null=True,
         blank=True,
         verbose_name="scheduled time"
     )
+
+    def __str__(self) -> str:
+        return self.name + " by " + self.reporter.username

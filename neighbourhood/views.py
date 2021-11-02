@@ -47,3 +47,31 @@ def business_view(request):
         else:
             data = serializer.errors
             return Response(data,status = status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST','GET'])
+@permission_classes([IsAuthenticatedOrReadOnly])
+def occurence_view(request,pk):
+    data = {}
+
+    try:
+        neighbourhood = Neighbourhood.objects.get(pk=pk)
+    except :
+        data['not found'] = "The neighbourhood was not found"
+        return Response(data,status = status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'POST':
+        serializer = OccurrenceSerializer(data = request.data)
+
+        if serializer.is_valid():
+            serializer.save(request,neighbourhood)
+            data['success'] = "The occurrence was successfully reported"
+            return Response(data,status = status.HTTP_200_OK)
+
+        else:
+            data = serializer.errors
+            return Response(data,status = status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'GET':
+        occurences = neighbourhood.reported_events
+        data['occurences'] = OccurrenceSerializer(occurences,many=True).data
+        return Response(data,status= status.HTTP_200_OK)
