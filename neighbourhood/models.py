@@ -1,4 +1,7 @@
 from django.db import models
+from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 from mptt.models import MPTTModel,TreeForeignKey
 
@@ -159,6 +162,28 @@ class Neighbourhood(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Profile(models.Model):
+    """This extends the user model and provides an interface to connect to the neighbourhood class
+
+    Args:
+        models ([type]): [description]
+    """
+    user = models.OneToOneField(Account,null=False,related_name="profile",on_delete=models.CASCADE,)
+    neighbourhood = models.ForeignKey(Neighbourhood,null=True,blank=True,on_delete=models.SET_NULL,related_name="user")
+
+    def __str__(self):
+        return self.user.username + "'s " + "profile"
+
+    @receiver(post_save, sender=Account)
+    def create_user_profile(sender, instance, created, **kwargs):
+        if created:
+            Profile.objects.create(user=instance)
+
+    @receiver(post_save, sender=Account)
+    def save_user_profile(sender, instance, **kwargs):
+        instance.profile.save()
 
 class Business(models.Model):
     """This defines a user business in a particular neighbourhood
