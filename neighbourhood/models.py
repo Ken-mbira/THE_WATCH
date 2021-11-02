@@ -207,7 +207,8 @@ class Business(models.Model):
         blank = False,
         null=False,
         verbose_name="business name",
-        help_text="format: required"
+        help_text="format: required",
+        unique=True
     )
 
     services = models.ForeignKey(
