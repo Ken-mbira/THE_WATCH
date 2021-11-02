@@ -6,7 +6,6 @@ admin.site.register(Location)
 admin.site.register(EventType)
 admin.site.register(Services)
 admin.site.register(Neighbourhood)
-admin.site.register(Profile)
 admin.site.register(Business)
 admin.site.register(Occurrence)
 

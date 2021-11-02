@@ -140,6 +140,13 @@ class Neighbourhood(models.Model):
         help_text="format: required"
     )
 
+    admin = models.OneToOneField(
+        Account,
+        related_name="is_admin_in",
+        on_delete=models.SET_NULL,
+        null=True,
+    )
+
     created_at = models.DateTimeField(
         auto_now_add=True,
         editable=False,
@@ -153,38 +160,6 @@ class Neighbourhood(models.Model):
     def __str__(self):
         return self.name
 
-
-class Profile(models.Model):
-    """This defines a user profile
-
-    Args:
-        models ([type]): [description]
-    """
-    account = models.OneToOneField(
-        Account,
-        related_name="profile",
-        blank=False,
-        null=False,
-        on_delete=models.CASCADE,
-    )
-
-    neighbourhood = models.ForeignKey(
-        Neighbourhood,
-        related_name="resident",
-        blank=False,
-        null=False,
-        on_delete=models.CASCADE,
-    )
-
-    is_admin = models.BooleanField(
-        default=False,
-        verbose_name="is user an admin in a model"
-    )
-
-    def __str__(self):
-        return self.account.username
-
-
 class Business(models.Model):
     """This defines a user business in a particular neighbourhood
 
@@ -193,7 +168,7 @@ class Business(models.Model):
     """
 
     owner = models.ForeignKey(
-        Profile,
+        Account,
         related_name="business",
         null=False,
         blank=False,
@@ -256,9 +231,10 @@ class Occurrence(models.Model):
     )
 
     reporter = models.ForeignKey(
-        Profile,
+        Account,
         related_name="reported_events",
-        on_delete=models.PROTECT,
+        on_delete=models.SET_NULL,
+        null=True,
     )
 
     image_description = models.ImageField(
