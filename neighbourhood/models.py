@@ -225,6 +225,9 @@ class Business(models.Model):
         upload_to='images/',
     )
 
+    def __str__(self):
+        return self.name + " | " + self.owner.username
+
 
 class Occurrence(models.Model):
     """This defines an occurence to be reported by a user
