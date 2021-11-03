@@ -14,7 +14,7 @@ def neighbour_view(request):
 
     if request.method == 'GET':
         neighbourhoods = Neighbourhood.objects.all()
-        data = NeighbourhoodSerializer(neighbourhoods,many=True).data
+        data = GetNeighbourhoodSerializer(neighbourhoods,many=True).data
         
         return Response(data,status = status.HTTP_200_OK)
 
@@ -24,6 +24,31 @@ def neighbour_view(request):
             serializer.save(request)
             data['success'] = "The neighbourhood was created successfully"
             return Response(data,status = status.HTTP_201_CREATED)
+
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def join_neighbourhood(request,pk):
+    data = {}
+    profile = Profile.objects.get(user = request.user)
+    neighbourhood = Neighbourhood.objects.get(pk=pk)
+    profile.neighbourhood = neighbourhood
+    profile.save()
+    data['success'] = f"You successfully joined ${neighbourhood.slogan}"
+    return Response(data,status = status.HTTP_200_OK)
+
+
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_neighbourhood(request):
+    data = {}
+    profile = Profile.objects.get(user = request.user)
+    print(profile.neighbourhood)
+    data = ProfileSerializer(profile).data
+    return Response(data,status = status.HTTP_200_OK)
 
 @api_view(['GET','POST'])
 @permission_classes([IsAuthenticatedOrReadOnly])

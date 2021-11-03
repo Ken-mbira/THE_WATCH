@@ -17,8 +17,33 @@ class NeighbourhoodSerializer(serializers.ModelSerializer):
         read_only_fields = ['admin']
 
     def save(self,request):
+        profile = Profile.objects.get(user = request.user)
         neighbourhood = Neighbourhood(name = self.validated_data['name'],location = self.validated_data['location'],slogan = self.validated_data['slogan'],police_hotline = self.validated_data['police_hotline'],hospital_hotline = self.validated_data['hospital_hotline'],image = self.validated_data['image'],admin = request.user)
         neighbourhood.save()
+        profile.neighbourhood = neighbourhood
+        profile.save()
+
+
+class LocationSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Location
+        fields = '__all__'
+
+
+class GetNeighbourhoodSerializer(serializers.ModelSerializer):
+    """This deals with parsing the neighbourhood model
+
+    Args:
+        serializers ([type]): [description]
+    """
+    admin = UserSerializer()
+    location = LocationSerializer(read_only=True)
+
+    class Meta:
+        model = Neighbourhood
+        fields = '__all__'
+        read_only_fields = ['admin']
 
 
 class ServiceSerializer(serializers.ModelSerializer):
@@ -63,3 +88,10 @@ class OccurrenceSerializer(serializers.ModelSerializer):
     def save(self,request,neighbourhood):
         occurence = Occurrence(type = self.validated_data['type'],neighbourhood = neighbourhood,reporter = request.user, name = self.validated_data['name'],description = self.validated_data['description'],image_description = self.validated_data['image_description'],to_happen_at = self.validated_data['to_happen_at'])
         occurence.save()
+
+class ProfileSerializer(serializers.ModelSerializer):
+    neighbourhood = NeighbourhoodSerializer(read_only=True)
+    user = UserSerializer(read_only=True)
+    class Meta:
+        model = Profile
+        fields = '__all__'
