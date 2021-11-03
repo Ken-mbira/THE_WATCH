@@ -25,6 +25,15 @@ def neighbour_view(request):
             data['success'] = "The neighbourhood was created successfully"
             return Response(data,status = status.HTTP_201_CREATED)
 
+        else:
+            data = serializer.errors
+            return Response(data,status = status.HTTP_400_BAD_REQUEST)
+
+class LocationList(generics.ListAPIView):
+    queryset = Location.objects.all()
+    serializer_class = LocationSerializer
+    permission_classes = [IsAuthenticated]
+
 
 
 @api_view(['POST'])

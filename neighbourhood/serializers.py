@@ -3,18 +3,22 @@ from rest_framework import serializers
 from neighbourhood.models import *
 from account.serializers import UserSerializer
 
+class LocationSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Location
+        fields = '__all__'
+
 class NeighbourhoodSerializer(serializers.ModelSerializer):
     """This deals with parsing the neighbourhood model
 
     Args:
         serializers ([type]): [description]
     """
-    admin = UserSerializer()
-
+    admin = UserSerializer(read_only=True)
     class Meta:
         model = Neighbourhood
         fields = '__all__'
-        read_only_fields = ['admin']
 
     def save(self,request):
         profile = Profile.objects.get(user = request.user)
@@ -23,12 +27,6 @@ class NeighbourhoodSerializer(serializers.ModelSerializer):
         profile.neighbourhood = neighbourhood
         profile.save()
 
-
-class LocationSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Location
-        fields = '__all__'
 
 
 class GetNeighbourhoodSerializer(serializers.ModelSerializer):

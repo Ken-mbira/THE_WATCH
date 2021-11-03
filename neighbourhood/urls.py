@@ -8,5 +8,6 @@ urlpatterns = [
     path('business/',views.business_view,name="business"),
     path('occurence/<int:pk>',views.occurence_view,name="occurence"),
     path('join_hood/<int:pk>',views.join_neighbourhood,name="joinhood"),
-    path('move_out/',views.move_out,name="move_out")
+    path('move_out/',views.move_out,name="move_out"),
+    path('locations/',views.LocationList.as_view(),name="location")
 ]
