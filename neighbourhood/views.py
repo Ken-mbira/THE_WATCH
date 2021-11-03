@@ -38,6 +38,17 @@ def join_neighbourhood(request,pk):
     data['success'] = f"You successfully joined ${neighbourhood.slogan}"
     return Response(data,status = status.HTTP_200_OK)
 
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def move_out(request):
+    data = {}
+    profile = Profile.objects.get(user = request.user)
+    profile.neighbourhood = None
+    profile.save()
+    data['success'] = "You are no longer a member of the neighbourhood!"
+    return Response(data,status = status.HTTP_200_OK)
+
+
 
 
 

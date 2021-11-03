@@ -7,5 +7,6 @@ urlpatterns = [
     path('myhood',views.get_neighbourhood,name="myhood"),
     path('business/',views.business_view,name="business"),
     path('occurence/<int:pk>',views.occurence_view,name="occurence"),
-    path('join_hood/<int:pk>',views.join_neighbourhood,name="joinhood")
+    path('join_hood/<int:pk>',views.join_neighbourhood,name="joinhood"),
+    path('move_out/',views.move_out,name="move_out")
 ]
