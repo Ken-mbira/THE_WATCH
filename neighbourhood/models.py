@@ -4,6 +4,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from mptt.models import MPTTModel,TreeForeignKey
+from cloudinary.models import CloudinaryField
 
 from account.models import Account
 
@@ -155,8 +156,7 @@ class Neighbourhood(models.Model):
         editable=False,
     )
 
-    image = models.ImageField(
-        upload_to="images/",
+    image = CloudinaryField("images/",
         null=True,
     )
 
@@ -220,10 +220,10 @@ class Business(models.Model):
         verbose_name="services offered",
     )
 
-    image = models.ImageField(
+    image = CloudinaryField(
+        'images/',
         blank=False,
         null=False,
-        upload_to='images/',
     )
 
     def __str__(self):
@@ -266,10 +266,10 @@ class Occurrence(models.Model):
         null=True,
     )
 
-    image_description = models.ImageField(
+    image_description = CloudinaryField(
+        'images/',
         blank=False,
         null=False,
-        upload_to='images/',
     )
 
     neighbourhood = models.ForeignKey(
