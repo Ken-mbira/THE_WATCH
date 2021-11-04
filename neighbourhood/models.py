@@ -229,6 +229,28 @@ class Business(models.Model):
     def __str__(self):
         return self.name + " | " + self.owner.username
 
+    def get_bussinesses(pk):
+        """This returns all businesses provided a neighbourhood
+
+        Returns:
+            [type]: [description]
+        """
+        neighbourhood = Neighbourhood.objects.get(pk=pk)
+        
+        bussinessOwners = Account.objects.filter(profile__neighbourhood = neighbourhood)
+
+        businesses = []
+        for i in bussinessOwners:
+            try:
+                business = Business.objects.get(owner = i)
+                businesses.append(business)
+            except:
+                continue
+
+        return businesses
+
+
+
 
 class Occurrence(models.Model):
     """This defines an occurence to be reported by a user

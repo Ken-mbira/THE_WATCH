@@ -120,3 +120,19 @@ def occurence_view(request,pk):
         occurences = neighbourhood.reported_events
         data['occurences'] = OccurrenceSerializer(occurences,many=True).data
         return Response(data,status= status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_businesses(request,pk):
+    """The view for getting all businesses in a neighbourhood
+
+    Args:
+        request ([type]): [description]
+        pk ([type]): [description]
+    """
+    businesses = Business.get_bussinesses(pk)
+    data = {}
+    data['businesses'] = BusinessSerializer(businesses,many=True).data
+
+    return Response(data,status.HTTP_200_OK)
