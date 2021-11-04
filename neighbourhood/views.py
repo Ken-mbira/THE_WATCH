@@ -3,8 +3,9 @@ from rest_framework.permissions import IsAuthenticated,IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import generics
-from neighbourhood.models import *
 
+from neighbourhood.models import *
+from account.serializers import *
 from neighbourhood.serializers import *
 
 @api_view(['GET','POST'])
@@ -136,3 +137,19 @@ def get_businesses(request,pk):
     data['businesses'] = BusinessSerializer(businesses,many=True).data
 
     return Response(data,status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_residents(request,pk):
+    """This parses the request to get the users in a certain neighbourhood
+
+    Args:
+        request ([type]): [description]
+        pk ([type]): [description]
+    """
+    data = {}
+    users = Profile.get_residents(pk)
+
+    data['users'] = UserSerializer(users,many=True).data
+    return Response(data,status = status.HTTP_200_OK)

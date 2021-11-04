@@ -10,5 +10,6 @@ urlpatterns = [
     path('join_hood/<int:pk>',views.join_neighbourhood,name="joinhood"),
     path('move_out/',views.move_out,name="move_out"),
     path('locations/',views.LocationList.as_view(),name="location"),
-    path('business/<int:pk>',views.get_businesses,name="hoodBusiness")
+    path('business/<int:pk>',views.get_businesses,name="hoodBusiness"),
+    path('myhood/<int:pk>',views.get_residents,name="residents"),
 ]

@@ -176,6 +176,20 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username + "'s " + "profile"
 
+    def get_residents(pk):
+        """This will return all users in a given neighbourhood
+
+        Args:
+            pk ([type]): [description]
+
+        Returns:
+            [type]: [description]
+        """
+        neighbourhood = Neighbourhood.objects.get(pk=pk)
+        users = Account.objects.filter(profile__neighbourhood = neighbourhood)
+
+        return users
+
     @receiver(post_save, sender=Account)
     def create_user_profile(sender, instance, created, **kwargs):
         if created:
