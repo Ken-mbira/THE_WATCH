@@ -84,7 +84,7 @@ class OccurrenceSerializer(serializers.ModelSerializer):
         read_only_fields = ['neighbourhood']
 
     def save(self,request,neighbourhood):
-        occurence = Occurrence(type = self.validated_data['type'],neighbourhood = neighbourhood,reporter = request.user, name = self.validated_data['name'],description = self.validated_data['description'],image_description = self.validated_data['image_description'],to_happen_at = self.validated_data['to_happen_at'])
+        occurence = Occurrence(type = self.validated_data['type'],neighbourhood = neighbourhood,reporter = request.user, name = self.validated_data['name'],description = self.validated_data['description'],image_description = self.validated_data['image_description'])
         occurence.save()
 
 class ProfileSerializer(serializers.ModelSerializer):
@@ -92,4 +92,9 @@ class ProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     class Meta:
         model = Profile
+        fields = '__all__'
+
+class EventSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EventType
         fields = '__all__'

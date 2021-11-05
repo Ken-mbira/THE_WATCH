@@ -12,5 +12,6 @@ urlpatterns = [
     path('locations/',views.LocationList.as_view(),name="location"),
     path('business/<int:pk>',views.get_businesses,name="hoodBusiness"),
     path('myhood/<int:pk>',views.get_residents,name="residents"),
-    path('search/<str:term>',views.search_business,name="search_business")
+    path('search/<str:term>',views.search_business,name="search_business"),
+    path('event_types/',views.EventTypeList.as_view(),name="event_types")
 ]

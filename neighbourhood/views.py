@@ -115,6 +115,7 @@ def occurence_view(request,pk):
 
         else:
             data = serializer.errors
+            print(data)
             return Response(data,status = status.HTTP_400_BAD_REQUEST)
 
     elif request.method == 'GET':
@@ -168,3 +169,8 @@ def search_business(request,term):
 
     data['businesses'] = BusinessSerializer(results,many=True).data
     return Response(data,status=status.HTTP_200_OK)
+
+class EventTypeList(generics.ListAPIView):
+    queryset = EventType.objects.all()
+    serializer_class = EventSerializer
+    permission_classes=[IsAuthenticated]
