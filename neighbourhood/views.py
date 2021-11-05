@@ -175,3 +175,8 @@ class EventTypeList(generics.ListAPIView):
     queryset = EventType.objects.all()
     serializer_class = EventSerializer
     permission_classes=[IsAuthenticated]
+
+class ServiceList(generics.ListAPIView):
+    queryset = Services.objects.all()
+    serializer_class = ServiceSerializer
+    permission_classes = [IsAuthenticated]
