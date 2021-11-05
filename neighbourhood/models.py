@@ -263,6 +263,27 @@ class Business(models.Model):
 
         return businesses
 
+    def search_by_name(search_term):
+        """This returns a business after being fed a query term
+
+        Args:
+            search_term ([type]): [description]
+
+        Returns:
+            [type]: [description]
+        """
+        results = []
+        businesses = Business.objects.filter(name__icontains = search_term)
+
+        for business in businesses:
+            results.append(business)
+
+        services = Business.objects.filter(services__name__icontains = search_term)
+
+        for business in services:
+            results.append(business)
+
+        return results
 
 
 

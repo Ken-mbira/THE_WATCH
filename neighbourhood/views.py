@@ -153,3 +153,18 @@ def get_residents(request,pk):
 
     data['users'] = UserSerializer(users,many=True).data
     return Response(data,status = status.HTTP_200_OK)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def search_business(request,term):
+    """This parses the view request for getting the businesses via a search term
+
+    Args:
+        request ([type]): [description]
+    """
+    data = {}
+
+    results = Business.search_by_name(term)
+
+    data['businesses'] = BusinessSerializer(results,many=True).data
+    return Response(data,status=status.HTTP_200_OK)
