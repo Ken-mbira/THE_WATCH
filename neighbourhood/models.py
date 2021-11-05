@@ -129,7 +129,7 @@ class Neighbourhood(models.Model):
     )
 
     police_hotline = models.CharField(
-        max_length=10,
+        max_length=100,
         blank = False,
         null=False,
         verbose_name="police hotline",
@@ -137,7 +137,7 @@ class Neighbourhood(models.Model):
     )
 
     hospital_hotline = models.CharField(
-        max_length=10,
+        max_length=100,
         blank = False,
         null=False,
         verbose_name="hospital hotline",
