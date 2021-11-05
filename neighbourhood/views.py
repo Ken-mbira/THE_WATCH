@@ -119,8 +119,9 @@ def occurence_view(request,pk):
             return Response(data,status = status.HTTP_400_BAD_REQUEST)
 
     elif request.method == 'GET':
-        occurences = neighbourhood.reported_events
-        data['occurences'] = OccurrenceSerializer(occurences,many=True).data
+        events = Occurrence.get_events(pk)
+        data = OccurrenceSerializer(events,many=True).data
+
         return Response(data,status= status.HTTP_200_OK)
 
 

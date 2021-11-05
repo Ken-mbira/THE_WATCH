@@ -350,3 +350,15 @@ class Occurrence(models.Model):
 
     def __str__(self) -> str:
         return self.name + " by " + self.reporter.username
+
+    
+    def get_events(pk):
+        """This returns all the events reported regarding a neighbourhood
+
+        Args:
+            pk ([type]): [description]
+        """
+        hood = Neighbourhood.objects.get(pk = pk)
+        events = Occurrence.objects.filter(neighbourhood = hood)
+
+        return events
