@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from account.serializers import RegistrationsSerializer
+from .emails import send_welcome_email
 
 
 @api_view(['POST',])

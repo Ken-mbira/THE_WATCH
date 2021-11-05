@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from account.models import Account
+from .emails import send_welcome_email
 
 class RegistrationsSerializer(serializers.ModelSerializer):
     class Meta:
@@ -15,6 +16,7 @@ class RegistrationsSerializer(serializers.ModelSerializer):
         """
         account = Account(email = self.validated_data['email'], username = self.validated_data['username'])
         account.set_password(self.validated_data['password'])
+        send_welcome_email(account.username,account.email)
 
         account.save()
         return account
